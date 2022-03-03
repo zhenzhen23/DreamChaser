@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/id_home_fragment">
+
+    <fragment
+        android:id="@+id/id_home_fragment"
+        android:name="com.example.dreamchaser.Fragments.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/id_events_fragment"
+        android:name="com.example.dreamchaser.Fragments.EventsFragment"
+        android:label="Events"
+        tools:layout="@layout/fragment_events" />
+    <fragment
+        android:id="@+id/id_pomodoro_fragment"
+        android:name="com.example.dreamchaser.Fragments.PomodoroFragment"
+        android:label="Pomodoro"
+        tools:layout="@layout/fragment_pomodoro" />
+    <fragment
+        android:id="@+id/id_todo_fragment"
+        android:name="com.example.dreamchaser.Fragments.TodoFragment"
+        android:label="Todo"
+        tools:layout="@layout/fragment_todo" />
+    <fragment
+        android:id="@+id/id_setting_fragment"
+        android:name="com.example.dreamchaser.Fragments.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>
