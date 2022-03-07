@@ -24,10 +24,16 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
     }
 
+    /**
+     * disable Bottom Navigation when call the function
+     */
     fun disableBottomNav(){
         findViewById<BottomNavigationView>(R.id.bottomNav).menu.forEach { it.isEnabled = false }
     }
 
+    /**
+     * enable Bottom Navigation when call the function
+     */
     fun enableBottomNav(){
         findViewById<BottomNavigationView>(R.id.bottomNav).menu.forEach { it.isEnabled = true }
     }

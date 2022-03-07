@@ -11,6 +11,9 @@ import android.util.Log
 import com.example.dreamchaser.Model.EventModelClass
 import com.example.dreamchaser.Model.TodoModelClass
 
+/**
+ * Database handler that deal with create, upgrade, add, delete operations of event
+ */
 class EventDatabaseHandler(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -44,6 +47,9 @@ class EventDatabaseHandler(context: Context) :
         onCreate(db)
     }
 
+    /**
+     * Add event to database
+     */
     fun addEvent(event: EventModelClass): Long {
         var db = this.writableDatabase
 
@@ -103,6 +109,9 @@ class EventDatabaseHandler(context: Context) :
         return eventList
     }
 
+    /**
+     * Delete event in database
+     */
     fun deleteEvent(event: EventModelClass): Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -113,6 +122,9 @@ class EventDatabaseHandler(context: Context) :
         return success
     }
 
+    /**
+     * Update value when user finish daily value
+     */
     fun addValue(event: EventModelClass): Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -121,6 +133,7 @@ class EventDatabaseHandler(context: Context) :
         contentValues.put(KEY_MAX_VALUE, event.maxValue)
         contentValues.put(KEY_DAILY_VALUE, event.dailyValue)
         var value = event.currentValue + event.dailyValue
+        /* when current greater then max value, current equal to max value*/
         if (value > event.maxValue) value = event.maxValue
         contentValues.put(KEY_CURRENT_VALUE, value)
 
@@ -130,6 +143,9 @@ class EventDatabaseHandler(context: Context) :
         return success
     }
 
+    /**
+     * Drop table in database
+     */
     fun dropTable(){
         val db = this.writableDatabase
         db.execSQL("DELETE FROM $TABLE_CONTACTS")

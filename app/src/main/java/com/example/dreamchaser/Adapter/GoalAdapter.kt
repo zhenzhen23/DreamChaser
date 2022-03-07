@@ -12,11 +12,13 @@ import com.example.dreamchaser.R
 import kotlinx.android.synthetic.main.goal_row.view.*
 import kotlin.math.roundToInt
 
+/**
+ * Adapter for goal recycle view
+ */
 class GoalAdapter(val context: Context, val items: ArrayList<EventModelClass>) :
     RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val llGoalItem = view.llGoalItem
         val tvGoalTitle = view.tvGoalTitle
         val pbGoalBar = view.pbGoalBar
         val tvGoalValue = view.tvGoalValue
@@ -39,6 +41,7 @@ class GoalAdapter(val context: Context, val items: ArrayList<EventModelClass>) :
         holder.tvGoalTitle.text = item.goal
         holder.pbGoalBar.max = item.maxValue
         holder.pbGoalBar.progress = item.currentValue
+        /* set percentage of maxValue and currentValue*/
         holder.tvGoalValue.text = (item.currentValue * 1f / item.maxValue * 100).roundToInt().toString() + "%"
     }
 

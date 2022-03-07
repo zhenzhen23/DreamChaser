@@ -23,6 +23,9 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import kotlin.collections.ArrayList
 
+/**
+ * Fragment class for home page
+ */
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
@@ -43,11 +46,18 @@ class HomeFragment : Fragment() {
         initRecyclerView(eventList)
     }
 
+    /**
+     * Init data of home page
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initTitle() {
         val fileName = "userInfo.txt"
         var file = File(context?.filesDir, fileName)
 
+        /**
+         * Check is the file exist, is true read data and display in home page
+         * if false create file and set default data
+         */
         if (file.exists()) {
             var info: List<String>?
 
@@ -70,21 +80,32 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * Init grid layout
+     */
     private fun initGridLayout(eventList: ArrayList<EventModelClass>) {
 
         val goalDatabaseHandler: EventDatabaseHandler = EventDatabaseHandler(context!!)
-        val param: LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val param: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         param.leftMargin = 30
         param.rightMargin = 30
         param.topMargin = 30
         param.bottomMargin = 30
 
-        if (eventList.isEmpty()){
+        /**
+         * Check if there are data in database
+         * if true get the data and create dynamic database
+         * if false display default textview
+         */
+        if (eventList.isEmpty()) {
             val tv: TextView = TextView(context)
             tv.text = "Enter you daily event in event page"
             tv.textSize = 24F
             glDailyEvents.addView(tv, param)
-        }else{
+        } else {
             for (item in eventList) {
                 val cb: CheckBox = CheckBox(context)
                 cb.text = item.event
@@ -100,6 +121,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * Init recycler View for home page
+     */
     private fun initRecyclerView(eventList: ArrayList<EventModelClass>) {
 
         if (eventList.size > 0) {

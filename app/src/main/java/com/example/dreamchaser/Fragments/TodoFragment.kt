@@ -13,13 +13,15 @@ import com.example.dreamchaser.R
 import com.example.dreamchaser.Model.TodoModelClass
 import kotlinx.android.synthetic.main.fragment_todo.*
 
+/**
+ * Fragment class for todo page
+ */
 class TodoFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_todo, container, false)
     }
 
@@ -32,6 +34,7 @@ class TodoFragment : Fragment() {
         setupListofDataIntoRecyclerView()
     }
 
+    /* Add record to database*/
     private fun addRecord(view: View?) {
         val todo = etTodo.text.toString()
         val todoDatabaseHandler: TodoDatabaseHandler? = TodoDatabaseHandler(context!!)
@@ -51,6 +54,7 @@ class TodoFragment : Fragment() {
         }
     }
 
+    /* set up recycler view in todo list page*/
     private fun setupListofDataIntoRecyclerView() {
 
         if (getItemList().size > 0) {

@@ -12,6 +12,9 @@ import kotlinx.android.synthetic.main.fragment_pomodoro.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * Fragment class for pomodoro clock page
+ */
 class PomodoroFragment : Fragment() {
 
     private var isPaused = false
@@ -22,7 +25,6 @@ class PomodoroFragment : Fragment() {
     private var focusTime = TimeUnit.MINUTES.toMillis(25)
     private var shortBreakTime = TimeUnit.MINUTES.toMillis(5)
     private var longBreakTime = TimeUnit.MINUTES.toMillis(15)
-    //Thread.sleep(3_000)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +42,15 @@ class PomodoroFragment : Fragment() {
 
             mainActivity.disableBottomNav()
 
+            /**
+             * Check if is break time,
+             */
             if (isBreak) {
                 tvTimeTitle.text = "Take a break"
 
+                /**
+                 * Check if the clock is paused,
+                 */
                 if (isPaused) {
                     breakTimer(resumeFromMillis, 1000).start()
 
@@ -87,6 +95,9 @@ class PomodoroFragment : Fragment() {
             }
         }
 
+        /**
+         * Set click listener for pause button
+         */
         btnPause.setOnClickListener { view ->
 
             tvTimeTitle.text = "Timer paused"
@@ -97,6 +108,9 @@ class PomodoroFragment : Fragment() {
             btnPause.isEnabled = false
         }
 
+        /**
+         * Set click listener for reset button
+         */
         btnReset.setOnClickListener { view ->
 
             mainActivity.enableBottomNav()
@@ -115,6 +129,9 @@ class PomodoroFragment : Fragment() {
         }
     }
 
+    /**
+     * Work timer, 25mins
+     */
     private fun workTimer(duration: Long, countDownInterval: Long): CountDownTimer {
         return object : CountDownTimer(duration, countDownInterval) {
 
@@ -139,9 +156,12 @@ class PomodoroFragment : Fragment() {
                 }
             }
 
+            /**
+             * Check if is long break,
+             * if count greater or equal to 3 take 15 mins long break
+             */
             override fun onFinish() {
                 isBreak = true
-                //TimeUnit.MINUTES.toMillis(1)
                 if (count == 3) {
                     if (activity != null) {
                         tvTimeTitle.text = "Take a long break"
@@ -158,6 +178,9 @@ class PomodoroFragment : Fragment() {
         }
     }
 
+    /**
+     * Break timer, short 5mins, long break 15mins
+     */
     private fun breakTimer(duration: Long, countDownInterval: Long): CountDownTimer {
         return object : CountDownTimer(duration, countDownInterval) {
             override fun onTick(l: Long) {
@@ -181,6 +204,11 @@ class PomodoroFragment : Fragment() {
                 }
             }
 
+            /**
+             * Check is is finial round
+             * if true stop clock
+             * if false start work timer
+             */
             override fun onFinish() {
                 count++
                 isBreak = false

@@ -12,13 +12,15 @@ import com.example.dreamchaser.Model.EventModelClass
 import com.example.dreamchaser.R
 import kotlinx.android.synthetic.main.event_row.view.*
 
+/**
+ * Adapter for event recycle view
+ */
 class EventAdapter(val context: Context, val items: ArrayList<EventModelClass>) :
     RecyclerView.Adapter<EventAdapter.ViewHolder>() {
 
     private val eventDatabase: EventDatabaseHandler = EventDatabaseHandler(context)
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val llEventItem = view.llEventItem
         val tvEventTitle = view.tvEventTitle
         val ivEventDelete = view.ivEventDelete
     }
@@ -39,6 +41,7 @@ class EventAdapter(val context: Context, val items: ArrayList<EventModelClass>) 
 
         holder.tvEventTitle.text = item.goal
 
+        /* when click delete button, delete select item in database and display a toast*/
         holder.ivEventDelete.setOnClickListener {
             eventDatabase.deleteEvent(item)
             Toast.makeText(context, "Event Deleted.", Toast.LENGTH_SHORT).show()

@@ -10,6 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.example.dreamchaser.Model.TodoModelClass
 
+/**
+ * Database handler that deal with create, upgrade, add, delete operations of todo list
+ */
 class TodoDatabaseHandler(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -33,6 +36,9 @@ class TodoDatabaseHandler(context: Context) :
         onCreate(db)
     }
 
+    /**
+     * Add todo item to database
+     */
     fun addTodo(todo: TodoModelClass): Long {
 
         var db = this.writableDatabase
@@ -78,17 +84,9 @@ class TodoDatabaseHandler(context: Context) :
         return todoList
     }
 
-    fun updateTodo(todo: TodoModelClass): Int {
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(KEY_TODO, todo.todo)
-
-        val success = db.update(TABLE_CONTACTS, contentValues, KEY_ID + "=" + todo.id, null)
-
-        db.close()
-        return success
-    }
-
+    /**
+     * Delete todo item in the database
+     */
     fun deleteTodo(todo: TodoModelClass): Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -99,6 +97,9 @@ class TodoDatabaseHandler(context: Context) :
         return success
     }
 
+    /**
+     * Drop table in database
+     */
     fun dropTable(){
         val db = this.writableDatabase
         db.execSQL("DELETE FROM $TABLE_CONTACTS")

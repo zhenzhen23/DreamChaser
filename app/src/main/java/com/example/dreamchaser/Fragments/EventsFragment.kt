@@ -13,13 +13,15 @@ import com.example.dreamchaser.Model.EventModelClass
 import com.example.dreamchaser.R
 import kotlinx.android.synthetic.main.fragment_events.*
 
+/**
+ * Fragment class for event page
+ */
 class EventsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events, container, false)
     }
 
@@ -33,6 +35,9 @@ class EventsFragment : Fragment() {
         }
     }
 
+    /**
+     * Set recycler view for event page
+     */
     private fun initRecyclerView() {
         if (getItemList().size > 0) {
             rvEvents.visibility = View.VISIBLE
@@ -43,6 +48,9 @@ class EventsFragment : Fragment() {
         }
     }
 
+    /**
+     * Add records to database
+     */
     private fun addRecord(view: View?) {
         val event = etEvent.text.toString()
         val goal = etGoal.text.toString()
@@ -50,6 +58,7 @@ class EventsFragment : Fragment() {
         val dailyValue = etDailyValue.text.toString()
         val eventDatabaseHandler: EventDatabaseHandler = EventDatabaseHandler(context!!)
 
+        /* Check input box is not empty*/
         if (event.isNotEmpty() && goal.isNotEmpty() && maxValue.isNotEmpty() && dailyValue.isNotEmpty()) {
             val status = eventDatabaseHandler.addEvent(
                 EventModelClass(

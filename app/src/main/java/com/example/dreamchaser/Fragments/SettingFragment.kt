@@ -18,13 +18,15 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Fragment class for setting page
+ */
 class SettingFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
 
@@ -39,6 +41,11 @@ class SettingFragment : Fragment() {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
+        /**
+         * Set click listener for change username button
+         * when user click this button popup an alertDialog
+         * when user enter username save it to info file
+         */
         btnSettingUsername.setOnClickListener { view ->
 
             val alertDialog = AlertDialog.Builder(context)
@@ -55,13 +62,17 @@ class SettingFragment : Fragment() {
                 dialog.dismiss()
             }
 
-            alertDialog.setNegativeButton("Cancel"){
-                dialog, i ->
+            alertDialog.setNegativeButton("Cancel") { dialog, i ->
                 dialog.cancel()
             }
             alertDialog.show()
         }
 
+        /**
+         * Set click listener for change goal button
+         * when user click this button popup an alertDialog
+         * when user enter new goal save it to info file
+         */
         btnSettingGoal.setOnClickListener { view ->
 
             val alertDialog = AlertDialog.Builder(context)
@@ -78,28 +89,42 @@ class SettingFragment : Fragment() {
                 dialog.dismiss()
             }
 
-            alertDialog.setNegativeButton("Cancel"){
-                    dialog, i ->
+            alertDialog.setNegativeButton("Cancel") { dialog, i ->
                 dialog.cancel()
             }
             alertDialog.show()
         }
 
+        /**
+         * Set click listener for change expected date button
+         * when user click this button popup an alertDialog
+         * when user enter new expected date save it to info file
+         */
         btnSettingDate.setOnClickListener { view ->
 
-            val dpd = DatePickerDialog(context!!, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(
+                context!!,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                val calender: Calendar= Calendar.getInstance()
-                calender.set(year, monthOfYear, dayOfMonth)
+                    val calender: Calendar = Calendar.getInstance()
+                    calender.set(year, monthOfYear, dayOfMonth)
 
-                val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+                    val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-                editUserInfo(2, sdf.format(calender.time))
-                Toast.makeText(activity, "Updated Expected Date", Toast.LENGTH_SHORT).show()
-            }, year, month, day)
+                    editUserInfo(2, sdf.format(calender.time))
+                    Toast.makeText(activity, "Updated Expected Date", Toast.LENGTH_SHORT).show()
+                },
+                year,
+                month,
+                day
+            )
             dpd.show()
         }
 
+        /**
+         * Set click listener for change reset button
+         * when user click this button reset whole app
+         */
         btnSettingReset.setOnClickListener { view ->
 
             val alertDialog = AlertDialog.Builder(context)
@@ -118,15 +143,17 @@ class SettingFragment : Fragment() {
                 dialog.dismiss()
             }
 
-            alertDialog.setNegativeButton("No"){
-                    dialog, i ->
+            alertDialog.setNegativeButton("No") { dialog, i ->
                 dialog.cancel()
             }
             alertDialog.show()
         }
     }
 
-    private fun editUserInfo(line: Int, data: String){
+    /**
+     * Get user input and update corresponding data
+     */
+    private fun editUserInfo(line: Int, data: String) {
         val fileName = "userInfo.txt"
         var info: List<String>?
 
@@ -136,13 +163,14 @@ class SettingFragment : Fragment() {
             }
         }
 
+        /* change immutable list to mutable list*/
         var mutableInfo = info?.toMutableList()
 
         mutableInfo?.set(line, data)
 
         context?.openFileOutput(fileName, Context.MODE_PRIVATE).use { output ->
-            for (item in mutableInfo!!){
-                output?.write((item+"\n").toByteArray())
+            for (item in mutableInfo!!) {
+                output?.write((item + "\n").toByteArray())
             }
         }
     }
